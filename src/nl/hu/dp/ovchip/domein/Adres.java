@@ -31,10 +31,10 @@ public class Adres {
 
     @Override
     public String toString() {
-        if (reiziger == null)
-            return "Adres #" + id + " " + postcode + "-" + huisnummer;
-        else
-            return "Adres #" + id + " " + postcode + "-" + huisnummer + ", reiziger #" + reiziger.getId();
+        StringBuilder string = new StringBuilder("Adres #" + id + " " + postcode + " " + huisnummer);
+        if (reiziger != null)
+            string.append(", reiziger #").append(reiziger.getId());
+        return string.toString();
     }
 
     //region getters

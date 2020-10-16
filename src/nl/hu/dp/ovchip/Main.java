@@ -4,6 +4,7 @@ import nl.hu.dp.ovchip.domein.Adres;
 import nl.hu.dp.ovchip.domein.OVChipkaart;
 import nl.hu.dp.ovchip.domein.Product;
 import nl.hu.dp.ovchip.domein.Reiziger;
+import nl.hu.dp.ovchip.persistency.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,7 +47,16 @@ public class Main {
     }
 
     public static void main(String[] args) throws SQLException {
-        testFetchAll();
+//        testFetchAll();
+        AdresDAO adresDAO = new AdresDAOHibernate();
+        OVChipkaartDAO ovChipkaartDAO = new OVChipkaartDAOHibernate();
+        ProductDAO productDAO = new ProductDAOHibernate();
+        ReizigerDAO reizigerDAO = new ReizigerDAOHibernate();
+
+        System.out.println(adresDAO.findAll());
+        System.out.println(reizigerDAO.findAll());
+        System.out.println(ovChipkaartDAO.findAll());
+        System.out.println(productDAO.findAll());
     }
 
     /**
