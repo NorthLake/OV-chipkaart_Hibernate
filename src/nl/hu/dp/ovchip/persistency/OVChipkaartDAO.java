@@ -11,7 +11,6 @@ public interface OVChipkaartDAO {
     void update(OVChipkaart ovChipkaart);
     void delete(OVChipkaart ovChipkaart);
     OVChipkaart findByKaartNummer(int kaartNummer);
-    Set<OVChipkaart> findByProduct(Product product);
     Set<OVChipkaart> findByReiziger(Reiziger reiziger);
     Set<OVChipkaart> findAll();
 }

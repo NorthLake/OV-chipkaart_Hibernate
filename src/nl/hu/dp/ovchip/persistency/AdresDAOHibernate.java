@@ -4,7 +4,6 @@ import nl.hu.dp.ovchip.domein.Adres;
 import nl.hu.dp.ovchip.domein.Reiziger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
@@ -14,41 +13,35 @@ import java.util.Set;
 public class AdresDAOHibernate implements AdresDAO {
     private SessionFactory sessionFactory;
 
-    public AdresDAOHibernate() {
-        Configuration configuration = new Configuration().configure();
-        sessionFactory = configuration.buildSessionFactory();
+    public AdresDAOHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-    public Session openSessionWithTransaction() {
+    @Override
+    public void save(Adres adres) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        return session;
-    }
-
-    public void closeSessionWithTransaction(Session session) {
+        session.save(adres);
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void save(Adres adres) {
-        Session session = openSessionWithTransaction();
-        session.save(adres);
-        closeSessionWithTransaction(session);
-    }
-
-    @Override
     public void update(Adres adres) {
-        Session session = openSessionWithTransaction();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
         session.update(adres);
-        closeSessionWithTransaction(session);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public void delete(Adres adres) {
-        Session session = openSessionWithTransaction();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
         session.delete(adres);
-        closeSessionWithTransaction(session);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override

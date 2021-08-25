@@ -14,9 +14,8 @@ import java.util.Set;
 public class ReizigerDAOHibernate implements ReizigerDAO {
     private SessionFactory sessionFactory;
 
-    public ReizigerDAOHibernate() {
-        Configuration configuration = new Configuration().configure();
-        sessionFactory = configuration.buildSessionFactory();
+    public ReizigerDAOHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override

@@ -13,9 +13,8 @@ import java.util.Set;
 public class ProductDAOHibernate implements ProductDAO {
     private SessionFactory sessionFactory;
 
-    public ProductDAOHibernate() {
-        Configuration configuration = new Configuration().configure();
-        sessionFactory = configuration.buildSessionFactory();
+    public ProductDAOHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     public Session openSessionWithTransaction() {
@@ -62,7 +61,7 @@ public class ProductDAOHibernate implements ProductDAO {
     public Set<Product> findByOVChipKaart(OVChipkaart ovChipkaart) {
         Session session = sessionFactory.openSession();
         //noinspection unchecked
-        Set<Product> producten = new HashSet<Product>(session.createQuery("select OVChipkaart from Product join OVChipkaart on Product.kaarten").list());
+        Set<Product> producten = new HashSet<Product>(session.createQuery("from Product join OVChipkaart on OVChipkaart.producten").list());
         session.close();
         return producten;
     }

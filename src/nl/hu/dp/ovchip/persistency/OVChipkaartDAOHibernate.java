@@ -15,9 +15,8 @@ import java.util.Set;
 public class OVChipkaartDAOHibernate implements OVChipkaartDAO {
     private SessionFactory sessionFactory;
 
-    public OVChipkaartDAOHibernate() {
-        Configuration configuration = new Configuration().configure();
-        sessionFactory = configuration.buildSessionFactory();
+    public OVChipkaartDAOHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     public Session openSessionWithTransaction() {
@@ -67,15 +66,6 @@ public class OVChipkaartDAOHibernate implements OVChipkaartDAO {
         query.setParameter("reizigerId", reiziger.getId());
         //noinspection unchecked
         Set<OVChipkaart> producten = new HashSet<OVChipkaart>(query.list());
-        session.close();
-        return producten;
-    }
-
-    @Override
-    public Set<OVChipkaart> findByProduct(Product product) {
-        Session session = sessionFactory.openSession();
-        //noinspection unchecked
-        Set<OVChipkaart> producten = new HashSet<OVChipkaart>(session.createQuery("select OVChipkaart from Product join Product.kaarten").list());
         session.close();
         return producten;
     }
